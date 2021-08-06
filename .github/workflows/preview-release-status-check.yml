@@ -3,7 +3,7 @@ name: Preview Release Version Status Check
 on:
   workflow_dispatch:
   push:
-    branches: [ release/v*.*.* ]
+    branches: [ release/add-console-msg ]
 
 jobs:
   Check_Version:
