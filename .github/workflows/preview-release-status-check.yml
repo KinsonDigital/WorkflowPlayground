@@ -1,0 +1,37 @@
+name: Preview Release Version Status Check
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+
+jobs:
+  Check_Version:
+    name: Build & Test (Library)
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Get Version From Project File
+      id: get-version
+      uses: KinsonDigital/vget@v0.3.0
+      with:
+        repo-owner-and-name: '${{ github.repository }}'
+        branch: '${{ github.ref }}'
+        relative-file-path: 'src/project-file.csproj'
+        user-name: 'kinsondigital@gmail.com'
+        password: ${{ secrets.REPO_PASSWORD }}
+
+    - name: Validate Preview Version Value
+      uses: actions/github-script@v4
+      with:
+        script: |
+          const script = require('${{ github.workspace }}/.github/workflows/status-check-scripts/preview-version-status-check.js');
+          let version = '${{ steps.get-version.outputs.version }}';
+          let scriptResult = script({github, context, core, version});
+
+          if (scriptResult.failed === true) {
+            core.setFailed(scriptResult.error);
+          } else {
+            console.log(`The version $'{version}' is valid!!`);
+          }
