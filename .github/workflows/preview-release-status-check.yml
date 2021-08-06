@@ -33,5 +33,5 @@ jobs:
           if (scriptResult.failed === true) {
             core.setFailed(scriptResult.error);
           } else {
-            console.log(`The version '${version}' is valid!!`);
+            console.log(`The version 'v${version}' is valid!!`);
           }
