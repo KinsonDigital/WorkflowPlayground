@@ -6,8 +6,8 @@ on:
     branches: [ release/add-console-msg ]
 
 jobs:
-  Check_Version:
-    name: Build & Test (Library)
+  Check_Preview_Version:
+    name: Check Preview Version
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -26,7 +26,7 @@ jobs:
       uses: actions/github-script@v4
       with:
         script: |
-          const script = require('./status-check-scripts/preview-version-status-check.js');
+          const script = require('./.github/workflows/status-check-scripts/preview-version-status-check.js');
           let version = '${{ steps.get-version.outputs.version }}';
           let scriptResult = script({github, context, core, version});
 
