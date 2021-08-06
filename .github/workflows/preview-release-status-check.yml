@@ -26,7 +26,7 @@ jobs:
       uses: actions/github-script@v4
       with:
         script: |
-          const script = require('${{ github.workspace }}/.github/workflows/status-check-scripts/preview-version-status-check.js');
+          const script = require('./status-check-scripts/preview-version-status-check.js');
           let version = '${{ steps.get-version.outputs.version }}';
           let scriptResult = script({github, context, core, version});
 
